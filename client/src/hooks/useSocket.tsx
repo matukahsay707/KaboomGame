@@ -30,7 +30,8 @@ export function useSocket() {
     const connect = async () => {
       setStatus('connecting');
       const token = await getIdToken();
-      const serverUrl = import.meta.env.VITE_SERVER_URL ?? window.location.origin;
+      const serverUrl = import.meta.env.VITE_SERVER_URL
+        || (import.meta.env.DEV ? 'http://localhost:3001' : window.location.origin);
 
       const s: TypedSocket = io(serverUrl, {
         auth: {
