@@ -1,12 +1,12 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 process.on('uncaughtException', (err) => {
   console.error('UNCAUGHT EXCEPTION — server will continue:', err);
 });
 process.on('unhandledRejection', (reason) => {
   console.error('UNHANDLED REJECTION — server will continue:', reason);
 });
-
-import path from 'path';
-import { fileURLToPath } from 'url';
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
