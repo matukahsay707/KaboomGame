@@ -38,12 +38,13 @@ export function useSocket() {
           uid: user.uid,
           displayName: user.displayName ?? 'Player',
         },
-        transports: ['websocket', 'polling'],
+        transports: ['polling', 'websocket'],
+        upgrade: true,
         reconnection: true,
         reconnectionAttempts: 10,
         reconnectionDelay: 1000,
         reconnectionDelayMax: 10000,
-        timeout: 10000,
+        timeout: 20000,
       });
 
       s.on('connect', () => {
