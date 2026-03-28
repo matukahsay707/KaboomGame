@@ -1,5 +1,12 @@
 import admin from 'firebase-admin';
 
+console.log('Firebase env check:', {
+  hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
+  hasClientEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
+  hasPrivateKey: !!process.env.FIREBASE_PRIVATE_KEY,
+  nodeEnv: process.env.NODE_ENV,
+});
+
 if (!admin.apps.length) {
   if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
     admin.initializeApp({
