@@ -22,6 +22,12 @@ import { BotManager } from './game/BotManager.js';
 import { MatchmakingManager } from './game/MatchmakingManager.js';
 
 const app = express();
+
+// Health check — must respond before any other middleware
+app.get('/health', (_req, res) => {
+  res.status(200).send('ok');
+});
+
 app.use(cors());
 app.use(express.json());
 
@@ -71,9 +77,6 @@ io.on('connection', (socket) => {
   });
 });
 
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
-});
 
 // Serve built client files in production / ngrok mode
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
