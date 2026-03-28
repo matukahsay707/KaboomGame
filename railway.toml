@@ -1,0 +1,9 @@
+[build]
+builder = "railpack"
+buildCommand = "npm install && npm run build --workspace=@kaboom/shared && npm run build --workspace=@kaboom/server"
+
+[deploy]
+startCommand = "node server/dist/index.js"
+
+[environment]
+NODE_VERSION = "20"
