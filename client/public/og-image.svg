@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="suits" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(-15)">
+      <text x="10" y="30" font-size="20" fill="white" opacity="0.04" font-family="serif">&#9824;</text>
+      <text x="70" y="30" font-size="20" fill="white" opacity="0.04" font-family="serif">&#9829;</text>
+      <text x="10" y="80" font-size="20" fill="white" opacity="0.04" font-family="serif">&#9827;</text>
+      <text x="70" y="80" font-size="20" fill="white" opacity="0.04" font-family="serif">&#9830;</text>
+    </pattern>
+    <radialGradient id="glow" cx="75%" cy="50%">
+      <stop offset="0%" stop-color="#f5c518" stop-opacity="0.08"/>
+      <stop offset="70%" stop-color="#f5c518" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0d2818"/>
+  <rect width="1600" height="900" x="-200" y="-100" fill="url(#suits)"/>
+  <ellipse cx="900" cy="315" rx="250" ry="250" fill="url(#glow)"/>
+
+  <!-- KABOOM logo -->
+  <text x="80" y="280" font-family="Arial Black, Impact, sans-serif" font-weight="900" font-size="96" letter-spacing="-2">
+    <tspan fill="#e94560">K</tspan><tspan fill="#f5c518">A</tspan><tspan fill="#ffffff">B</tspan><tspan fill="#e94560">O</tspan><tspan fill="#f5c518">O</tspan><tspan fill="#ffffff">M</tspan>
+  </text>
+  <!-- Underline -->
+  <rect x="80" y="292" width="160" height="4" rx="2" fill="url(#underline-grad)"/>
+  <defs>
+    <linearGradient id="underline-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e94560"/>
+      <stop offset="50%" stop-color="#f5c518"/>
+      <stop offset="100%" stop-color="#e94560"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tagline -->
+  <text x="80" y="340" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="300" fill="white">The explosive card game of memory,</text>
+  <text x="80" y="368" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="300" fill="white">strategy &amp; quick reflexes</text>
+
+  <!-- Pills -->
+  <rect x="80" y="395" width="90" height="30" rx="15" fill="rgba(245,197,24,0.08)" stroke="#f5c518" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="125" y="415" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#f5c518">Memory</text>
+  <rect x="180" y="395" width="92" height="30" rx="15" fill="rgba(245,197,24,0.08)" stroke="#f5c518" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="226" y="415" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#f5c518">Strategy</text>
+  <rect x="282" y="395" width="130" height="30" rx="15" fill="rgba(245,197,24,0.08)" stroke="#f5c518" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="347" y="415" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#f5c518">Quick Reflexes</text>
+
+  <!-- Cards -->
+  <g transform="translate(700, 130)">
+    <!-- Card 1: K spades -->
+    <g transform="translate(0, 80) rotate(-15, 60, 84)">
+      <rect width="120" height="168" rx="10" fill="white" filter="url(#shadow)"/>
+      <text x="60" y="75" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#1a1a2e">K</text>
+      <text x="60" y="125" text-anchor="middle" font-size="42" fill="#1a1a2e">&#9824;</text>
+    </g>
+    <!-- Card 2: Q hearts -->
+    <g transform="translate(50, 50) rotate(-7, 60, 84)">
+      <rect width="120" height="168" rx="10" fill="white" filter="url(#shadow)"/>
+      <text x="60" y="75" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#e94560">Q</text>
+      <text x="60" y="125" text-anchor="middle" font-size="42" fill="#e94560">&#9829;</text>
+    </g>
+    <!-- Card 3: Joker -->
+    <g transform="translate(110, 30)">
+      <rect width="120" height="168" rx="10" fill="#1a1a2e"/>
+      <text x="60" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="900" fill="#f5c518" letter-spacing="2">JOKER</text>
+      <text x="60" y="125" text-anchor="middle" font-size="48" fill="#f5c518">&#9733;</text>
+    </g>
+    <!-- Card 4: 10 diamonds -->
+    <g transform="translate(170, 50) rotate(7, 60, 84)">
+      <rect width="120" height="168" rx="10" fill="white" filter="url(#shadow)"/>
+      <text x="60" y="75" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#e94560">10</text>
+      <text x="60" y="125" text-anchor="middle" font-size="42" fill="#e94560">&#9830;</text>
+    </g>
+    <!-- Card 5: J clubs -->
+    <g transform="translate(220, 80) rotate(15, 60, 84)">
+      <rect width="120" height="168" rx="10" fill="white" filter="url(#shadow)"/>
+      <text x="60" y="75" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="700" fill="#1a1a2e">J</text>
+      <text x="60" y="125" text-anchor="middle" font-size="42" fill="#1a1a2e">&#9827;</text>
+    </g>
+  </g>
+
+  <!-- Shadow filter -->
+  <defs>
+    <filter id="shadow" x="-10%" y="-5%" width="120%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="black" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Bottom -->
+  <text x="80" y="590" font-family="-apple-system, sans-serif" font-size="18" font-weight="600" fill="#f5c518">playkaboom.io</text>
+  <text x="1120" y="590" text-anchor="end" font-family="-apple-system, sans-serif" font-size="16" fill="white" opacity="0.4">Free to play</text>
+</svg>

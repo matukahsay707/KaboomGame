@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kaboom OG Preview</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+.og {
+  width: 1200px; height: 630px;
+  background: #0d2818;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+}
+/* Suit pattern background */
+.bg-pattern {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ctext x='10' y='30' font-size='20' fill='white'%3E%E2%99%A0%3C/text%3E%3Ctext x='70' y='30' font-size='20' fill='white'%3E%E2%99%A5%3C/text%3E%3Ctext x='10' y='80' font-size='20' fill='white'%3E%E2%99%A3%3C/text%3E%3Ctext x='70' y='80' font-size='20' fill='white'%3E%E2%99%A6%3C/text%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  transform: rotate(-15deg) scale(1.5);
+}
+/* Left content */
+.left {
+  flex: 1; padding: 60px 40px 60px 80px;
+  display: flex; flex-direction: column; justify-content: center;
+  z-index: 2;
+}
+.logo {
+  font-size: 96px; font-weight: 900; letter-spacing: -2px;
+  line-height: 1;
+}
+.logo .k { color: #e94560; }
+.logo .a { color: #f5c518; }
+.logo .b { color: #ffffff; }
+.logo .o1 { color: #e94560; }
+.logo .o2 { color: #f5c518; }
+.logo .m { color: #ffffff; }
+.underline {
+  width: 160px; height: 4px; margin-top: 8px;
+  background: linear-gradient(90deg, #e94560, #f5c518, #e94560);
+  border-radius: 2px;
+}
+.tagline {
+  color: #ffffff; font-size: 22px; font-weight: 300;
+  margin-top: 20px; max-width: 420px; line-height: 1.4;
+}
+.pills {
+  display: flex; gap: 10px; margin-top: 24px;
+}
+.pill {
+  padding: 6px 16px; border-radius: 20px;
+  background: rgba(245,197,24,0.08);
+  border: 1px solid rgba(245,197,24,0.4);
+  color: #f5c518; font-size: 13px; font-weight: 600;
+}
+/* Right content — card fan */
+.right {
+  flex: 0 0 480px; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+}
+.card-fan { position: relative; width: 340px; height: 400px; }
+.card {
+  position: absolute; width: 120px; height: 168px;
+  border-radius: 10px; background: #fff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: Georgia, serif;
+}
+.card .rank { font-size: 36px; font-weight: 700; line-height: 1; }
+.card .suit { font-size: 42px; line-height: 1; margin-top: 2px; }
+.card.red .rank, .card.red .suit { color: #e94560; }
+.card.black .rank, .card.black .suit { color: #1a1a2e; }
+.card.joker {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%);
+  color: #f5c518; font-weight: 900;
+}
+.card.joker .rank { font-size: 18px; letter-spacing: 2px; }
+.card.joker .suit { font-size: 48px; }
+/* Positions */
+.c1 { left: 0; top: 80px; transform: rotate(-15deg); z-index: 1; }
+.c2 { left: 50px; top: 50px; transform: rotate(-7deg); z-index: 2; }
+.c3 { left: 110px; top: 30px; transform: rotate(0deg); z-index: 3; }
+.c4 { left: 170px; top: 50px; transform: rotate(7deg); z-index: 2; }
+.c5 { left: 220px; top: 80px; transform: rotate(15deg); z-index: 1; }
+/* Bottom bar */
+.bottom-left {
+  position: absolute; bottom: 30px; left: 80px;
+  color: #f5c518; font-size: 18px; font-weight: 600;
+  z-index: 3;
+}
+.bottom-right {
+  position: absolute; bottom: 30px; right: 60px;
+  color: rgba(255,255,255,0.4); font-size: 16px;
+  z-index: 3;
+}
+/* Glow behind cards */
+.glow {
+  position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+  width: 350px; height: 350px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,197,24,0.08) 0%, transparent 70%);
+  z-index: 1;
+}
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="bg-pattern"></div>
+  <div class="glow"></div>
+
+  <div class="left">
+    <div class="logo">
+      <span class="k">K</span><span class="a">A</span><span class="b">B</span><span class="o1">O</span><span class="o2">O</span><span class="m">M</span>
+    </div>
+    <div class="underline"></div>
+    <div class="tagline">The explosive card game of memory, strategy & quick reflexes</div>
+    <div class="pills">
+      <span class="pill">Memory</span>
+      <span class="pill">Strategy</span>
+      <span class="pill">Quick Reflexes</span>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="card-fan">
+      <div class="card black c1">
+        <div class="rank">K</div>
+        <div class="suit">&spades;</div>
+      </div>
+      <div class="card red c2">
+        <div class="rank">Q</div>
+        <div class="suit">&hearts;</div>
+      </div>
+      <div class="card joker c3">
+        <div class="rank">JOKER</div>
+        <div class="suit">&#9733;</div>
+      </div>
+      <div class="card red c4">
+        <div class="rank">10</div>
+        <div class="suit">&diams;</div>
+      </div>
+      <div class="card black c5">
+        <div class="rank">J</div>
+        <div class="suit">&clubs;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-left">playkaboom.io</div>
+  <div class="bottom-right">Free to play</div>
+</div>
+</body>
+</html>
