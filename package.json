@@ -17,6 +17,10 @@
     "start": "node server/dist/index.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "typescript": "^5.4.5"
