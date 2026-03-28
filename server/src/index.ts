@@ -28,30 +28,32 @@ app.get('/health', (_req, res) => {
   res.status(200).send('ok');
 });
 
-app.use(cors());
+const corsCheck = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+  // Allow requests with no origin (mobile apps, curl, server-to-server)
+  if (!origin) return callback(null, true);
+  // Allow all localhost in dev
+  if (origin.includes('localhost')) return callback(null, true);
+  // Allow production domains
+  if (origin === 'https://playkaboom.io' || origin === 'https://www.playkaboom.io') return callback(null, true);
+  // Allow Railway domain
+  if (origin.includes('railway.app')) return callback(null, true);
+  // Allow ngrok
+  if (origin.includes('ngrok')) return callback(null, true);
+  // Allow CLIENT_URL if set
+  if (process.env.CLIENT_URL && origin === process.env.CLIENT_URL) return callback(null, true);
+  callback(null, false);
+};
+
+app.use(cors({ origin: corsCheck, credentials: true }));
 app.use(express.json());
 
 const httpServer = createServer(app);
 
-const allowedOrigins: string[] = [process.env.CLIENT_URL ?? 'http://localhost:5173'];
-if (process.env.NODE_ENV === 'development') {
-  allowedOrigins.push('https://*.ngrok-free.app', 'https://*.ngrok.io');
-}
-
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
   cors: {
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      const isAllowed = allowedOrigins.some((pattern) => {
-        if (pattern.includes('*')) {
-          const regex = new RegExp('^' + pattern.replace(/\./g, '\\.').replace('*', '.*') + '$');
-          return regex.test(origin);
-        }
-        return pattern === origin;
-      });
-      callback(null, isAllowed);
-    },
+    origin: corsCheck,
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
