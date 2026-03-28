@@ -82,7 +82,7 @@ export default function HeroSection({ onPlayOnline, onPlayFriends, onPlayBots }:
           {/* Play vs Bots — tertiary */}
           <button
             onClick={onPlayBots}
-            className="flex-1 py-3.5 px-6 bg-transparent border border-gray-600 hover:border-gray-400 text-white font-bold rounded-xl transition-all duration-200 active:scale-[0.98]"
+            className="flex-1 py-3.5 px-6 bg-transparent border border-gray-600 hover:border-gray-400 text-white font-bold rounded-xl transition-all duration-200 active:scale-[0.98] min-h-[48px]"
           >
             Play vs Bots
             <span className="block text-[10px] font-normal text-gray-400 mt-0.5">Practice against AI</span>

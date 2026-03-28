@@ -10,6 +10,7 @@ export type ConnectionStatus = 'connected' | 'connecting' | 'disconnected' | 're
 export function useSocket() {
   const { user, getIdToken } = useAuth();
   const socketRef = useRef<TypedSocket | null>(null);
+  const [socket, setSocket] = useState<TypedSocket | null>(null);
   const [connected, setConnected] = useState(false);
   const [status, setStatus] = useState<ConnectionStatus>('disconnected');
   const [reconnectAttempt, setReconnectAttempt] = useState(0);
@@ -19,6 +20,7 @@ export function useSocket() {
       if (socketRef.current) {
         socketRef.current.disconnect();
         socketRef.current = null;
+        setSocket(null);
         setConnected(false);
         setStatus('disconnected');
       }
@@ -30,7 +32,7 @@ export function useSocket() {
       const token = await getIdToken();
       const serverUrl = import.meta.env.VITE_SERVER_URL ?? window.location.origin;
 
-      const socket: TypedSocket = io(serverUrl, {
+      const s: TypedSocket = io(serverUrl, {
         auth: {
           token,
           uid: user.uid,
@@ -44,13 +46,13 @@ export function useSocket() {
         timeout: 10000,
       });
 
-      socket.on('connect', () => {
+      s.on('connect', () => {
         setConnected(true);
         setStatus('connected');
         setReconnectAttempt(0);
       });
 
-      socket.on('disconnect', (reason) => {
+      s.on('disconnect', (reason) => {
         setConnected(false);
         if (reason === 'io server disconnect') {
           setStatus('disconnected');
@@ -59,25 +61,26 @@ export function useSocket() {
         }
       });
 
-      socket.io.on('reconnect_attempt', (attempt) => {
+      s.io.on('reconnect_attempt', (attempt) => {
         setStatus('reconnecting');
         setReconnectAttempt(attempt);
       });
 
-      socket.io.on('reconnect', () => {
+      s.io.on('reconnect', () => {
         setStatus('connected');
         setReconnectAttempt(0);
       });
 
-      socket.io.on('reconnect_failed', () => {
+      s.io.on('reconnect_failed', () => {
         setStatus('disconnected');
       });
 
-      socket.on('connect_error', () => {
+      s.on('connect_error', () => {
         setStatus('reconnecting');
       });
 
-      socketRef.current = socket;
+      socketRef.current = s;
+      setSocket(s); // trigger re-render so consumers get the socket
     };
 
     connect();
@@ -85,6 +88,7 @@ export function useSocket() {
     return () => {
       socketRef.current?.disconnect();
       socketRef.current = null;
+      setSocket(null);
       setConnected(false);
       setStatus('disconnected');
     };
@@ -98,5 +102,5 @@ export function useSocket() {
     }
   }, []);
 
-  return { socket: socketRef.current, connected, status, reconnectAttempt, forceReconnect };
+  return { socket, connected, status, reconnectAttempt, forceReconnect };
 }
