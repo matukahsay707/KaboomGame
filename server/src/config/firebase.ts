@@ -1,19 +1,19 @@
 import admin from 'firebase-admin';
 
 console.log('Firebase env check:', {
-  hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
-  hasClientEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
-  hasPrivateKey: !!process.env.FIREBASE_PRIVATE_KEY,
+  hasProjectId: !!process.env.project_id,
+  hasClientEmail: !!process.env.client_email,
+  hasPrivateKey: !!process.env.private_key,
   nodeEnv: process.env.NODE_ENV,
 });
 
 if (!admin.apps.length) {
-  if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
+  if (process.env.project_id && process.env.client_email && process.env.private_key) {
     admin.initializeApp({
       credential: admin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT_ID,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        projectId: process.env.project_id,
+        clientEmail: process.env.client_email,
+        privateKey: process.env.private_key.replace(/\\n/g, '\n'),
       }),
     });
   } else {
