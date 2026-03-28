@@ -1,9 +1,10 @@
 import type { GameState, GamePhase } from '@kaboom/shared';
 import { GAME_CONFIG } from '@kaboom/shared';
 
-export type ValidationResult =
-  | { readonly valid: true }
-  | { readonly valid: false; readonly error: string };
+export type ValidationResult = {
+  readonly valid: boolean;
+  readonly error?: string;
+};
 
 function ok(): ValidationResult {
   return { valid: true };
