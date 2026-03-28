@@ -83,8 +83,9 @@ app.get('*', (_req, res) => {
   res.sendFile(path.join(clientDist, 'index.html'));
 });
 
-const PORT = process.env.PORT ?? 3001;
-httpServer.listen(PORT, () => {
+const PORT = Number(process.env.PORT) || 8080;
+console.log(`Server starting on port ${PORT}, NODE_ENV=${process.env.NODE_ENV}`);
+httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`Kaboom server running on port ${PORT}`);
 });
 
