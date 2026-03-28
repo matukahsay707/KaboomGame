@@ -83,10 +83,17 @@ app.get('*', (_req, res) => {
   res.sendFile(path.join(clientDist, 'index.html'));
 });
 
-const PORT = Number(process.env.PORT) || 8080;
-console.log(`Server starting on port ${PORT}, NODE_ENV=${process.env.NODE_ENV}`);
-httpServer.listen(PORT, '0.0.0.0', () => {
-  console.log(`Kaboom server running on port ${PORT}`);
+console.log('Environment PORT value:', process.env.PORT);
+console.log('Environment PORT type:', typeof process.env.PORT);
+console.log('All env keys:', Object.keys(process.env).filter(k => k.includes('PORT') || k.includes('RAIL')));
+
+const PORT = Number(process.env.PORT);
+if (!PORT) {
+  console.error('ERROR: PORT environment variable not set by Railway');
+}
+console.log('Using PORT:', PORT);
+httpServer.listen(PORT || 8080, '0.0.0.0', () => {
+  console.log(`Kaboom server running on port ${PORT || 8080}`);
 });
 
 export { io, roomManager, botManager, matchmakingManager };
