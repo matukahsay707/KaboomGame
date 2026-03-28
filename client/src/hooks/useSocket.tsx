@@ -35,12 +35,11 @@ export function useSocket() {
 
       const s: TypedSocket = io(serverUrl, {
         auth: {
-          token,
           uid: user.uid,
           displayName: user.displayName ?? 'Player',
         },
-        transports: ['polling', 'websocket'],
-        upgrade: true,
+        transports: ['polling'],
+        upgrade: false,
         reconnection: true,
         reconnectionAttempts: 10,
         reconnectionDelay: 1000,

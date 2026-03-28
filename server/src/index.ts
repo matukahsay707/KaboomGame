@@ -55,6 +55,10 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
     methods: ['GET', 'POST'],
     credentials: true,
   },
+  transports: ['polling'],
+  allowUpgrades: false,
+  pingTimeout: 60000,
+  pingInterval: 25000,
 });
 
 const roomManager = new RoomManager();
