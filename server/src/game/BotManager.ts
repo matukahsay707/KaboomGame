@@ -357,6 +357,12 @@ export class BotManager {
     }
 
     if (ability === 'peek' && specialDecision.targetPlayer && specialDecision.targetSlot !== undefined) {
+      io.to(roomCode).emit('game:peekStart', {
+        peekingPlayerId: botId,
+        targetPlayerId: specialDecision.targetPlayer,
+        targetSlotIndex: specialDecision.targetSlot,
+      });
+
       const peekedCard = executePeek(gameState, specialDecision.targetPlayer, specialDecision.targetSlot);
       if (peekedCard) {
         bot.memory = rememberCard(bot.memory, specialDecision.targetPlayer, specialDecision.targetSlot, peekedCard);
@@ -391,6 +397,12 @@ export class BotManager {
       );
 
       const tradeTargetPlayer = gameState.players.find(p => p.id === specialDecision.targetPlayer);
+      io.to(roomCode).emit('game:tradeStart', {
+        tradingPlayerId: botId,
+        tradingSlotIndex: specialDecision.tradeMySlot!,
+        targetPlayerId: specialDecision.targetPlayer!,
+        targetSlotIndex: specialDecision.targetSlot!,
+      });
       io.to(roomCode).emit('game:tradeComplete', {
         player1: botId,
         slot1: specialDecision.tradeMySlot,
@@ -414,7 +426,13 @@ export class BotManager {
     }
 
     if (ability === 'peekAndTrade' && specialDecision.targetPlayer && specialDecision.targetSlot !== undefined) {
-      // Peek first
+      // Peek first — broadcast to all
+      io.to(roomCode).emit('game:peekStart', {
+        peekingPlayerId: botId,
+        targetPlayerId: specialDecision.targetPlayer,
+        targetSlotIndex: specialDecision.targetSlot,
+      });
+
       const peekedCard = executePeek(gameState, specialDecision.targetPlayer, specialDecision.targetSlot);
       if (peekedCard) {
         bot.memory = rememberCard(bot.memory, specialDecision.targetPlayer, specialDecision.targetSlot, peekedCard);
@@ -439,6 +457,12 @@ export class BotManager {
             );
 
             const queenTarget = gameState.players.find(p => p.id === specialDecision.targetPlayer);
+            io.to(roomCode).emit('game:tradeStart', {
+              tradingPlayerId: botId,
+              tradingSlotIndex: tradeDecision.mySlot!,
+              targetPlayerId: specialDecision.targetPlayer!,
+              targetSlotIndex: specialDecision.targetSlot!,
+            });
             io.to(roomCode).emit('game:tradeComplete', {
               player1: botId,
               slot1: tradeDecision.mySlot,

@@ -312,8 +312,16 @@ export function registerGameHandlers(
       const slotCheck = validateSlotHasCard(ctx.gameState, targetPlayer, targetSlot);
       if (!slotCheck.valid) { socket.emit('game:error', { message: slotCheck.error }); return; }
 
+      // Broadcast peek start to all — animation begins
+      io.to(ctx.roomCode).emit('game:peekStart', {
+        peekingPlayerId: ctx.uid,
+        targetPlayerId: targetPlayer,
+        targetSlotIndex: targetSlot,
+      });
+
       const peekedCard = executePeek(ctx.gameState, targetPlayer, targetSlot);
       if (peekedCard) {
+        // Only the peeking player sees the card value
         socket.emit('game:peekReveal', { card: peekedCard, slotIndex: targetSlot });
       }
 
@@ -377,6 +385,14 @@ export function registerGameHandlers(
       validateSlotHasCard(ctx.gameState, targetPlayer, targetSlot)
     );
     if (!check.valid) { socket.emit('game:error', { message: check.error }); return; }
+
+    // Broadcast trade start to all — animation begins
+    io.to(ctx.roomCode).emit('game:tradeStart', {
+      tradingPlayerId: ctx.uid,
+      tradingSlotIndex: mySlot,
+      targetPlayerId: targetPlayer,
+      targetSlotIndex: targetSlot,
+    });
 
     const newState = executeTrade(ctx.gameState, ctx.uid, mySlot, targetPlayer, targetSlot);
 

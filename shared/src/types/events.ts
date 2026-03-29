@@ -39,7 +39,9 @@ export interface ServerToClientEvents {
   'game:cardSwapped': (payload: { playerId: string; slotIndex: number; discardedCard: Card }) => void;
   'game:cardDiscarded': (payload: { discardedCard: Card }) => void;
   'game:specialPrompt': (payload: { cardRank: string; ability: SpecialAbility }) => void;
+  'game:peekStart': (payload: { peekingPlayerId: string; targetPlayerId: string; targetSlotIndex: number }) => void;
   'game:peekReveal': (payload: { card: Card; slotIndex: number }) => void;
+  'game:tradeStart': (payload: { tradingPlayerId: string; tradingSlotIndex: number; targetPlayerId: string; targetSlotIndex: number }) => void;
   'game:tradeComplete': (payload: { player1: string; slot1: number; player2: string; slot2: number }) => void;
   'game:actionAnnounce': (payload: { type: 'peek' | 'blindTrade' | 'queenPeek' | 'queenPeekTrade' | 'queenTrade'; playerId: string; playerName: string; targetPlayerName?: string }) => void;
   'game:matchWindow': (payload: ClientMatchWindow) => void;

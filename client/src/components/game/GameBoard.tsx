@@ -13,6 +13,7 @@ import GameStartBanner from './GameStartBanner.tsx';
 import PeekAnimation from './PeekAnimation.tsx';
 import TradeArcAnimation from './TradeArcAnimation.tsx';
 import ActionBanner, { type BannerEvent } from './ActionBanner.tsx';
+import CinematicOverlay, { type CinematicEvent } from './CinematicOverlay.tsx';
 
 interface GameBoardProps {
   readonly gameState: ClientGameState;
@@ -51,6 +52,9 @@ export default function GameBoard({ gameState, currentUserId, onQuit }: GameBoar
   const dequeueBanner = useCallback(() => {
     setBannerQueue((prev) => prev.slice(1));
   }, []);
+
+  const [cinematicEvent, setCinematicEvent] = useState<CinematicEvent | null>(null);
+  const clearCinematic = useCallback(() => setCinematicEvent(null), []);
 
   // Entry sequence: deal → peek → start banner → play
   const [entryPhase, setEntryPhase] = useState<EntryPhase>(() => {
@@ -177,14 +181,49 @@ export default function GameBoard({ gameState, currentUserId, onQuit }: GameBoar
       }
     };
 
+    const onPeekStart = (data: { peekingPlayerId: string; targetPlayerId: string; targetSlotIndex: number }) => {
+      setCinematicEvent({
+        type: 'peek',
+        peekingPlayerId: data.peekingPlayerId,
+        targetPlayerId: data.targetPlayerId,
+        targetSlotIndex: data.targetSlotIndex,
+      });
+    };
+
+    const onPeekReveal = (data: { card: any; slotIndex: number }) => {
+      // Update existing peek cinematic with the revealed card (only for the peeking player)
+      setCinematicEvent((prev) => {
+        if (prev && prev.type === 'peek') {
+          return { ...prev, revealedCard: data.card };
+        }
+        return prev;
+      });
+    };
+
+    const onTradeStart = (data: { tradingPlayerId: string; tradingSlotIndex: number; targetPlayerId: string; targetSlotIndex: number }) => {
+      setCinematicEvent({
+        type: 'trade',
+        tradingPlayerId: data.tradingPlayerId,
+        tradingSlotIndex: data.tradingSlotIndex,
+        targetPlayerId: data.targetPlayerId,
+        targetSlotIndex: data.targetSlotIndex,
+      });
+    };
+
     socket.on('game:matchSuccess', onMatchSuccess);
     socket.on('game:matchFail', onMatchFail);
     socket.on('game:actionAnnounce', onActionAnnounce);
+    socket.on('game:peekStart', onPeekStart);
+    socket.on('game:peekReveal', onPeekReveal);
+    socket.on('game:tradeStart', onTradeStart);
 
     return () => {
       socket.off('game:matchSuccess', onMatchSuccess);
       socket.off('game:matchFail', onMatchFail);
       socket.off('game:actionAnnounce', onActionAnnounce);
+      socket.off('game:peekStart', onPeekStart);
+      socket.off('game:peekReveal', onPeekReveal);
+      socket.off('game:tradeStart', onTradeStart);
     };
   }, [socket, currentUserId, gameState.opponents, play, queueBanner]);
 
@@ -488,6 +527,14 @@ export default function GameBoard({ gameState, currentUserId, onQuit }: GameBoar
           KABOOM!
         </button>
       )}
+
+      {/* Cinematic peek/trade overlay */}
+      <CinematicOverlay
+        event={cinematicEvent}
+        localPlayerId={currentUserId}
+        onComplete={clearCinematic}
+        playSound={play}
+      />
 
       {/* Action banner — unified announcements for all game events */}
       <ActionBanner bannerQueue={bannerQueue} onDequeue={dequeueBanner} />
